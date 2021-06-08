@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetAllLocationsUseCase @Inject constructor(private val locationsRepository: LocationsRepository) {
 
-    fun getAllLocations(): Observable<List<Location>> {
-        return locationsRepository.getAllLocations()
+    fun getAllLocations(page: Int): Observable<List<Location>> {
+        return locationsRepository.getAllLocations(page)
     }
 }

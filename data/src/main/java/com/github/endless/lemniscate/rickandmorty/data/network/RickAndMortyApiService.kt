@@ -7,13 +7,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 const val BASE_URL = "https://rickandmortyapi.com/api/"
 
 interface RickAndMortyApiService {
 
     @GET("location")
-    fun getAllLocations(): Observable<LocationsResponse>
+    fun getAllLocations(@Query("page") page: Int): Observable<LocationsResponse>
 
     companion object {
         private val gson = GsonBuilder()

@@ -1,9 +1,11 @@
 package com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.recycler
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.github.endless.lemniscate.rickandmorty.R
 import com.github.endless.lemniscate.rickandmorty.databinding.LocationItemLayoutBinding
 import com.github.endless.lemniscate.rickandmorty.domain.models.Location
 
@@ -13,7 +15,7 @@ class LocationsRecyclerAdapter: RecyclerView.Adapter<LocationsRecyclerAdapter.Vi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LocationItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -23,10 +25,14 @@ class LocationsRecyclerAdapter: RecyclerView.Adapter<LocationsRecyclerAdapter.Vi
 
     override fun getItemCount(): Int = locations.size
 
-    class ViewHolder(private val binding: LocationItemLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: LocationItemLayoutBinding, private val context: Context): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Location) {
-            binding.title.text = item.name
+            binding.apply {
+                name.text = item.name
+                type.text = context.getString(R.string.type_holder, item.type)
+                dimension.text = context.getString(R.string.type_holder, item.dimension)
+            }
         }
     }
 

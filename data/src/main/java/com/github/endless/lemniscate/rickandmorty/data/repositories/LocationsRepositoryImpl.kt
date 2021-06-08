@@ -7,8 +7,8 @@ import io.reactivex.Observable
 
 class LocationsRepositoryImpl(private val api: RickAndMortyApiService): LocationsRepository {
 
-    override fun getAllLocations(): Observable<List<Location>> {
-        val response = api.getAllLocations()
+    override fun getAllLocations(page: Int): Observable<List<Location>> {
+        val response = api.getAllLocations(page)
         return response.map { resp ->
             resp.results.map {
                 it.created
