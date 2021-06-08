@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_locations"
+    android:id="@+id/navigation">
+
+    <fragment
+        android:id="@+id/navigation_locations"
+        android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations" />
+    <fragment
+        android:id="@+id/navigation_characters"
+        android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" />
+    <fragment
+        android:id="@+id/navigation_episodes"
+        android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.EpisodesFragment"
+        android:label="fragment_episodes"
+        tools:layout="@layout/fragment_episodes" />
+
+</navigation>
