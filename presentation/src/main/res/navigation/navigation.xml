@@ -9,7 +9,11 @@
         android:id="@+id/navigation_locations"
         android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.LocationsFragment"
         android:label="fragment_locations"
-        tools:layout="@layout/fragment_locations" />
+        tools:layout="@layout/fragment_locations" >
+        <action
+            android:id="@+id/action_navigation_locations_to_locationDetailsFragment"
+            app:destination="@id/locationDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_characters"
         android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.CharactersFragment"
@@ -20,5 +24,10 @@
         android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.EpisodesFragment"
         android:label="fragment_episodes"
         tools:layout="@layout/fragment_episodes" />
+    <fragment
+        android:id="@+id/locationDetailsFragment"
+        android:name="com.github.endless.lemniscate.rickandmorty.presentation.ui.location_details.LocationDetailsFragment"
+        android:label="fragment_location_details"
+        tools:layout="@layout/fragment_location_details" />
 
 </navigation>

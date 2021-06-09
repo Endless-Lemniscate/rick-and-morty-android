@@ -6,13 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.endless.lemniscate.rickandmorty.R
 import com.github.endless.lemniscate.rickandmorty.databinding.FragmentLocationsBinding
+import com.github.endless.lemniscate.rickandmorty.domain.models.Location
+import com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.recycler.ItemClickListener
 import com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.recycler.LocationsRecyclerAdapter
 
-class LocationsFragment: Fragment() {
+class LocationsFragment: Fragment(), ItemClickListener {
 
     private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
@@ -27,12 +32,27 @@ class LocationsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewModel.fetch()
-
         setupRecyclerView()
 
         viewModel.locations.observe(viewLifecycleOwner, { locations ->
             locationsAdapter.updateList(locations)
+        })
+
+        binding.swipeContainer.setOnRefreshListener {
+            viewModel.getLocations(refresh = true)
+        }
+
+        viewModel.isRefreshing.observe(viewLifecycleOwner, { isRefreshing ->
+            if(!isRefreshing) {
+                binding.swipeContainer.isRefreshing = false
+            }
+        })
+
+
+        viewModel.message.observe(viewLifecycleOwner, { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
@@ -82,11 +102,21 @@ class LocationsFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        locationsAdapter = LocationsRecyclerAdapter()
+        locationsAdapter = LocationsRecyclerAdapter(this)
         binding.locationsRecyclerView.apply {
             adapter = locationsAdapter
             addOnScrollListener(this@LocationsFragment.scrollListener)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun itemClicked(item: Location) {
+        //TODO add bundle
+        findNavController().navigate(R.id.action_navigation_locations_to_locationDetailsFragment)
     }
 
 }
