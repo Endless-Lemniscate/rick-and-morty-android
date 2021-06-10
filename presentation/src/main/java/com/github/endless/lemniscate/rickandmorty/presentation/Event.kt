@@ -1,4 +1,4 @@
-package com.github.endless.lemniscate.rickandmorty.presentation.ui
+package com.github.endless.lemniscate.rickandmorty.presentation
 
 open class Event<out T>(private val content: T) {
 

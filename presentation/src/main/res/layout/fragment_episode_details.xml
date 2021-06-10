@@ -10,7 +10,7 @@
         app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Location name:"
+        android:text="Name:"
         android:textSize="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -28,43 +28,43 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        app:layout_constraintBottom_toTopOf="@+id/type"
+        app:layout_constraintBottom_toTopOf="@+id/air_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Location type:"
+        android:text="Air date:"
         android:textSize="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/type"
+        android:id="@+id/air_date"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        tools:text="Some type"
+        tools:text="Some date"
         android:textSize="@dimen/_20sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        app:layout_constraintBottom_toTopOf="@+id/dimension"
+        app:layout_constraintBottom_toTopOf="@+id/episode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Dimension:"
+        android:text="Episode:"
         android:textSize="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/dimension"
+        android:id="@+id/episode"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.6"
-        tools:text="Some dimension"
+        tools:text="Some episode"
         android:textSize="@dimen/_20sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

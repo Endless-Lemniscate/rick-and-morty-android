@@ -11,7 +11,6 @@ class LocationsRepositoryImpl(private val api: RickAndMortyApiService): Location
         val response = api.getAllLocations(page)
         return response.map { resp ->
             resp.results.map {
-                it.created
                 Location(
                     id = it.id,
                     name = it.name,

@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="type_holder">type: %s</string>
     <string name="dimension_holder">dimension: %s</string>
+
+    <string name="air_date_holder">air date: %s</string>
+    <string name="episode_holder">episode: %s</string>
 </resources>

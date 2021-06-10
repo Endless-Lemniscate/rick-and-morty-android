@@ -12,21 +12,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.endless.lemniscate.rickandmorty.R
-import com.github.endless.lemniscate.rickandmorty.databinding.FragmentLocationsBinding
+import com.github.endless.lemniscate.rickandmorty.databinding.FragmentLocationsListBinding
 import com.github.endless.lemniscate.rickandmorty.domain.models.Location
+import com.github.endless.lemniscate.rickandmorty.presentation.models.toParcelable
 import com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.recycler.ItemClickListener
 import com.github.endless.lemniscate.rickandmorty.presentation.ui.locations.recycler.LocationsRecyclerAdapter
 
-class LocationsFragment: Fragment(), ItemClickListener {
+class LocationsListFragment: Fragment(), ItemClickListener {
 
-    private var _binding: FragmentLocationsBinding? = null
+    private var _binding: FragmentLocationsListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LocationsListViewModel by viewModels()
     private lateinit var locationsAdapter: LocationsRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        _binding = FragmentLocationsBinding.inflate(inflater, container, false)
+        _binding = FragmentLocationsListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,21 +49,30 @@ class LocationsFragment: Fragment(), ItemClickListener {
             }
         })
 
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            if (it) {
+                showProgressBar()
+                return@observe
+            }
+            hideProgressBar()
+
+        })
 
         viewModel.message.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let { message ->
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         })
+
     }
 
     private fun hideProgressBar() {
-        //paginationProgressBar.visibility = View.INVISIBLE
+        binding.paginationProgressBar.visibility = View.INVISIBLE
         isLoading = false
     }
 
     private fun showProgressBar() {
-        //paginationProgressBar.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
     }
 
@@ -89,7 +99,8 @@ class LocationsFragment: Fragment(), ItemClickListener {
                 viewModel.getLocations()
                 isScrolling = false
             } else {
-                binding.locationsRecyclerView.setPadding(0, 0, 0, 0)
+                binding.locationsRecyclerView.setPadding(0, 0, 0,
+                    resources.getDimension(R.dimen._15sdp).toInt())
             }
         }
 
@@ -105,7 +116,7 @@ class LocationsFragment: Fragment(), ItemClickListener {
         locationsAdapter = LocationsRecyclerAdapter(this)
         binding.locationsRecyclerView.apply {
             adapter = locationsAdapter
-            addOnScrollListener(this@LocationsFragment.scrollListener)
+            addOnScrollListener(this@LocationsListFragment.scrollListener)
         }
     }
 
@@ -114,9 +125,10 @@ class LocationsFragment: Fragment(), ItemClickListener {
         _binding = null
     }
 
-    override fun itemClicked(item: Location) {
-        //TODO add bundle
-        findNavController().navigate(R.id.action_navigation_locations_to_locationDetailsFragment)
+    override fun itemClicked(location: Location) {
+        val direction = LocationsListFragmentDirections
+            .actionNavigationLocationsToLocationDetailsFragment(location.toParcelable())
+        findNavController().navigate(direction)
     }
 
 }

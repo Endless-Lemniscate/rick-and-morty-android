@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.endless.lemniscate.rickandmorty.R
 import com.github.endless.lemniscate.rickandmorty.databinding.LocationItemLayoutBinding
 import com.github.endless.lemniscate.rickandmorty.domain.models.Location
-import java.security.interfaces.RSAMultiPrimePrivateCrtKey
 
 class LocationsRecyclerAdapter(private val itemClickListener: ItemClickListener):
     RecyclerView.Adapter<LocationsRecyclerAdapter.ViewHolder>() {
@@ -52,5 +51,5 @@ class LocationsRecyclerAdapter(private val itemClickListener: ItemClickListener)
 }
 
 interface ItemClickListener {
-    fun itemClicked(item: Location)
+    fun itemClicked(location: Location)
 }

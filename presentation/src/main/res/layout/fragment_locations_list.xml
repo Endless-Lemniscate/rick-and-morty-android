@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/characters_recycler_view"
+                android:id="@+id/locations_recycler_view"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/location_item_layout"
                 android:clipToPadding="false"

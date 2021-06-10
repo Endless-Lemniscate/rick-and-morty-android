@@ -1,26 +1,26 @@
-package com.github.endless.lemniscate.rickandmorty.presentation.ui.locations
+package com.github.endless.lemniscate.rickandmorty.presentation.ui.characters
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.endless.lemniscate.rickandmorty.domain.models.Location
-import com.github.endless.lemniscate.rickandmorty.domain.usecases.GetAllLocationsUseCase
+import com.github.endless.lemniscate.rickandmorty.domain.models.Character
+import com.github.endless.lemniscate.rickandmorty.domain.usecases.GetAllCharactersUseCase
 import com.github.endless.lemniscate.rickandmorty.presentation.App
 import com.github.endless.lemniscate.rickandmorty.presentation.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class LocationsListViewModel: ViewModel() {
+class CharactersListViewModel: ViewModel() {
 
     private var page = 1
 
     @Inject
-    lateinit var useCase: GetAllLocationsUseCase
+    lateinit var useCase: GetAllCharactersUseCase
 
-    private val _locations = MutableLiveData<List<Location>>()
-    val locations: LiveData<List<Location>> = _locations
+    private val _characters = MutableLiveData<List<Character>>()
+    val characters: LiveData<List<Character>> = _characters
 
     private val _message = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = _message
@@ -33,23 +33,23 @@ class LocationsListViewModel: ViewModel() {
 
     init {
         App.applicationComponent.inject(this)
-        getLocations()
+        getCharacters()
     }
 
     @SuppressLint("CheckResult")
-    fun getLocations(refresh: Boolean = false) {
+    fun getCharacters(refresh: Boolean = false) {
         if (refresh) {
             _isRefreshing.value = true
             page = 1
         } else {
             _isLoading.value = true
         }
-        useCase.getAllLocations(page)
+        useCase.getAllCharacters(page)
             .subscribeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { list ->
-                    _locations.postValue(addPageToList(list))
+                    _characters.postValue(addPageToList(list))
                     _isRefreshing.postValue(false)
                     _isLoading.postValue(false)
                     if (refresh) showMessage("Success!")
@@ -63,13 +63,13 @@ class LocationsListViewModel: ViewModel() {
             )
     }
 
-    private fun addPageToList(newPage: List<Location>) : List<Location> {
+    private fun addPageToList(newPage: List<Character>) : List<Character> {
         if(page == 1) {
             page++
             return newPage
         }
         page++
-        val list = _locations.value!!.toMutableList()
+        val list = _characters.value!!.toMutableList()
         list.addAll(newPage)
         return list
     }

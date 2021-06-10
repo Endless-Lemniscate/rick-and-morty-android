@@ -1,4 +1,4 @@
-package com.github.endless.lemniscate.rickandmorty.data.models.locations
+package com.github.endless.lemniscate.rickandmorty.data.network.models.location
 
 data class Results (
     val id : Int,
