@@ -10,6 +10,7 @@ import com.github.endless.lemniscate.rickandmorty.presentation.App
 import com.github.endless.lemniscate.rickandmorty.presentation.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class EpisodesListViewModel: ViewModel() {
@@ -55,10 +56,17 @@ class EpisodesListViewModel: ViewModel() {
                     if (refresh) showMessage("Success!")
                 },
                 { throwable ->
-                    throwable.printStackTrace()
+                    if(throwable is HttpException) {
+                        if(throwable.code() != 404) {
+                            throwable.printStackTrace()
+                            showMessage("Error occurred")
+                        }
+                    } else {
+                        throwable.printStackTrace()
+                        showMessage("Error occurred")
+                    }
                     _isRefreshing.postValue(false)
                     _isLoading.postValue(false)
-                    showMessage("Error occurred")
                 }
             )
     }

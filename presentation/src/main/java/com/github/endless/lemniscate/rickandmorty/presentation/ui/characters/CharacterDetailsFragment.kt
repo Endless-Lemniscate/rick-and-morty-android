@@ -6,9 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.RequestManager
 import com.github.endless.lemniscate.rickandmorty.databinding.FragmentCharacterDetailsBinding
+import com.github.endless.lemniscate.rickandmorty.presentation.App
+import javax.inject.Inject
 
 class CharacterDetailsFragment : Fragment() {
+
+    @Inject
+    lateinit var glide: RequestManager
+
+    init {
+        App.applicationComponent.inject(this)
+    }
 
     private var _binding: FragmentCharacterDetailsBinding? = null
     private val binding get() = _binding!!
@@ -27,7 +37,9 @@ class CharacterDetailsFragment : Fragment() {
         binding.species.text = character.species
         binding.status.text = character.status
         binding.gender.text = character.gender
-        binding.image.text = character.imageUrl
+
+        glide.load(character.imageUrl)
+            .into(binding.image)
     }
 
     override fun onDestroyView() {

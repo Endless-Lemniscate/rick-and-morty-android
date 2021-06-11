@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.github.endless.lemniscate.rickandmorty.R
+import com.bumptech.glide.RequestManager
 import com.github.endless.lemniscate.rickandmorty.databinding.CharacterItemLayoutBinding
-import com.github.endless.lemniscate.rickandmorty.databinding.LocationItemLayoutBinding
 import com.github.endless.lemniscate.rickandmorty.domain.models.Character
-import com.github.endless.lemniscate.rickandmorty.domain.models.Location
+import com.github.endless.lemniscate.rickandmorty.presentation.App
+import javax.inject.Inject
 
 class CharactersRecyclerAdapter(private val itemClickListener: ItemClickListener):
     RecyclerView.Adapter<CharactersRecyclerAdapter.ViewHolder>() {
+
+    @Inject
+    lateinit var glide: RequestManager
+
+    init {
+        App.applicationComponent.inject(this)
+    }
 
     private val characters = ArrayList<Character>()
 
@@ -37,7 +44,9 @@ class CharactersRecyclerAdapter(private val itemClickListener: ItemClickListener
                 species.text = item.species
                 status.text = item.status
                 gender.text = item.gender
-                image.text = item.imageUrl
+
+                glide.load(item.imageUrl)
+                    .into(image)
             }
             binding.root.setOnClickListener {
                 itemClickListener.itemClicked(item)
